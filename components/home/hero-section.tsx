@@ -1,4 +1,5 @@
-import { Sparkles } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export const HeroSection = () => {
   return (
@@ -10,11 +11,31 @@ export const HeroSection = () => {
             <Sparkles color="var(--primary)" size={14} />
             <span>Thousands of movies at your fingertips</span>
           </div>
-          <h1 className="text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl font-bold text-foreground leading-tight sm:text-5xl lg:text-6xl">
             Discover Your Next
             <br />
             <span className="text-primary">Favorite Movie</span>
           </h1>
+          <p className="text-lg text-muted-foreground text-pretty max-w-2xl md:text-xl">
+            Explore an extensive collection of films, from timeless classics to the latest releases. Find detailed information, ratings, and more.
+          </p>
+          <div className="flex flex-col justify-center items-center gap-4 sm:flex-row">
+            <Link
+              href="/explore"
+              data-slot="button"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-primary text-white text-sm font-medium md:mb-4"
+            >
+              <span>Explore Movies</span>
+              <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="#popular"
+              data-slot="button"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-background text-foreground text-sm border font-medium md:mb-4"
+            >
+              <span>Browse popular</span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
