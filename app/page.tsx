@@ -1,9 +1,8 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { MovieSection } from "@/components/home/movie-section";
-import { Header } from "@/components/layout/header";
 import { tmdbServices } from "@/lib/services/tmdb";
 import { Suspense } from "react";
-import { MovieCardSkeleton } from "@/components/ui/moive-card-skeleton";
+import { MovieCardSkeleton } from "@/components/ui/movie-card-skeleton";
 
 export default async function Home() {
   const data = await tmdbServices.getPopularMovies();
