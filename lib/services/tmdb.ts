@@ -38,5 +38,36 @@ export const tmdbServices = {
           tags: ['popular-movies']
         },
       });
-  }
+  },
+
+  async getUpcomingMovies(page = 1) {
+    return tmdbFetch<MoviesResponse>(`/movie/upcoming?page=${page}`,
+      {
+        next: {
+          revalidate: 3600,
+          tags: ['upcoming-movies']
+        },
+      }
+    )
+  },
+
+  async getTopRatedMovies(page = 1) {
+    return tmdbFetch<MoviesResponse>(`/movie/top_rated?page=${page}`,
+      {
+        next: {
+          revalidate: 3600,
+          tags: ['top-rated-movies']
+        },
+      });
+  },
+
+  async getNowPlayingMovies(page = 1) {
+    return tmdbFetch<MoviesResponse>(`/movie/now_playing?page=${page}`,
+      {
+        next: {
+          revalidate: 3600,
+          tags: ['now-playing-movies']
+        },
+      });
+  },
 }
