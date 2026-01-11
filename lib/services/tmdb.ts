@@ -1,4 +1,4 @@
-import { MoviesResponse } from "../types/movie";
+import { Movie, MoviesResponse } from "../types/movie";
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
@@ -70,4 +70,46 @@ export const tmdbServices = {
         },
       });
   },
+
+  async getMovieById(id: number) {
+    return tmdbFetch<Movie>(`/movie/${id}`,
+      {
+        next: {
+          revalidate: 3600,
+          tags: ['movie']
+        },
+      });
+  },
+
+  async searchMovie(query: string, page = 1) {
+    return tmdbFetch<MoviesResponse>(`/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
+      {
+        next: {
+          revalidate: 3600,
+          tags: ['search-movies']
+        },
+      });
+  },
+
+  async getExploreMovies(
+    params: {
+      page?: number,
+      genre?: string,
+      sort_by?: string,
+      year?: string
+    }
+  ) {
+    const { page = 1, genre, sort_by = 'popularity.desc', year } = params;
+    let endpoint = `/discover/movie?page=${page}&sort_by=${sort_by}`;
+    if (genre) {
+      endpoint += `&with_genres=${genre}`;
+    }
+    if (year) {
+      endpoint += `&primary_release_year=${year}`;
+    }
+    return tmdbFetch<MoviesResponse>(endpoint,
+      {
+        cache: 'no-store'
+      });
+  }
 }
