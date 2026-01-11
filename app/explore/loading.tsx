@@ -1,3 +1,4 @@
+
 "use client";
 
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
@@ -7,7 +8,7 @@ export default function Loading() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center space-y-4">
         <LoadingSpinner size="lg" />
-        <p className="text-muted-foreground">Loading movies...</p>
+        <p className="text-muted-foreground">Loading list of movies...</p>
       </div>
     </div>
   );
