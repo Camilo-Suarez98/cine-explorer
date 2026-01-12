@@ -23,3 +23,8 @@ export interface TMDBResponse<T> {
 }
 
 export interface MoviesResponse extends TMDBResponse<Movie> { }
+
+export interface Genre {
+  id: number
+  name: string
+}

@@ -2,6 +2,7 @@ import { Searchbar } from "@/components/explore/searchbar";
 import { MovieSection } from "@/components/home/movie-section";
 import { tmdbServices } from "@/lib/services/tmdb";
 import { Metadata } from "next";
+import { EmptyState } from "@/components/ui/empty-movies";
 
 export const metadata: Metadata = {
   title: "Explore Movies",
@@ -41,35 +42,61 @@ async function MovieResults({
         sort_by: sort_by || 'popularity.desc',
         year: year || '',
       });
-    return data;
+    if (data.results.length === 0) {
+      return (
+        <div className="container mx-auto px-4">
+          <EmptyState
+            title="No movies found"
+            description="Try a different search or filter."
+            actionLabel="Clear filters"
+            actionHref="?"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <MovieSection
+          id="explore"
+          movies={data.results}
+          title="Explore"
+          description={`Founded ${data.total_results.toLocaleString() || 0} movies`}
+        />
+      );
+    }
   } catch (error) {
     console.error('Error fetching movies:', error);
   }
 }
 
 export default async function Explore({ searchParams }: ExploreMoviesParams) {
-  const currentPage = Number(searchParams.page) || 1;
-  const movies = await MovieResults({
-    page: currentPage.toString(),
-    genre: searchParams.genre || '',
-    year: searchParams.year || '',
-    sort_by: searchParams.sort_by || '',
-    query: searchParams.query || '',
-  });
-  console.log('movies', movies);
+  const params = await searchParams;
+  const { genre, year, sort_by, query, page } = params;
+
+  const genresData = await tmdbServices.getGenres();
+
+  const resultsPreview = query
+    ? await tmdbServices.searchMovie(query, 1)
+    : await tmdbServices.getExploreMovies({
+      page: 1,
+      genre,
+      sort_by,
+      year,
+    });
+
   return (
     <section className="py-8 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <Searchbar />
         </div>
-        <MovieSection
-          id="explore"
-          movies={movies?.results || []}
-          title="Explore"
-          description={`Founded ${movies?.total_results?.toLocaleString() || 0} movies`}
+        <MovieResults
+          page={page || '1'}
+          genre={genre || ''}
+          year={year || ''}
+          sort_by={sort_by || ''}
+          query={query || ''}
         />
       </div>
     </section>
   );
-}
+};
