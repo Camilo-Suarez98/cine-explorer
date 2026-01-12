@@ -75,8 +75,8 @@ export const tmdbServices = {
     return tmdbFetch<Movie>(`/movie/${id}`,
       {
         next: {
-          revalidate: 3600,
-          tags: ['movie']
+          revalidate: 86400,
+          tags: [`movie-${id}`]
         },
       });
   },
