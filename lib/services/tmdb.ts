@@ -1,4 +1,4 @@
-import { Movie, MoviesResponse } from "../types/movie";
+import { Genre, Movie, MoviesResponse } from "../types/movie";
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
@@ -111,5 +111,15 @@ export const tmdbServices = {
       {
         cache: 'no-store'
       });
-  }
+  },
+
+  async getGenres() {
+    return tmdbFetch<Genre[]>(`/genre/movie/list`,
+      {
+        next: {
+          revalidate: 604800,
+          tags: ['genres']
+        },
+      });
+  },
 }
