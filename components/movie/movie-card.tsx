@@ -14,7 +14,7 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
             alt={`${movie.title} poster`}
             width={200}
             height={300}
-            className="w-full"
+            className="w-full object-cover md:h-[330px]"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
         </div>
