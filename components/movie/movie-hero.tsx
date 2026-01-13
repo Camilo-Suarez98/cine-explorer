@@ -9,7 +9,7 @@ export const MovieHero = ({ movie }: { movie: MovieDetails }) => {
       <div className="absolute inset-0 z-0">
         <div className="relative h-[500px] md:h-[600px]">
           <Image
-            src={getImageUrl(movie.backdrop_path, "original") || "/placeholder.svg"}
+            src={getImageUrl(movie.backdrop_path) || "/placeholder.svg"}
             alt={`${movie.title} picture`}
             fill
             className="object-cover"
