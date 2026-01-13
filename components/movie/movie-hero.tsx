@@ -13,6 +13,7 @@ export const MovieHero = ({ movie }: { movie: MovieDetails }) => {
             alt={`${movie.title} picture`}
             fill
             className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-background/40"></div>
         </div>
