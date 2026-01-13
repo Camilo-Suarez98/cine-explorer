@@ -1,4 +1,4 @@
-import { Genre, Movie, MoviesResponse } from "../types/movie";
+import { Genre, MovieDetails, MoviesResponse } from "../types/movie";
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
@@ -72,7 +72,7 @@ export const tmdbServices = {
   },
 
   async getMovieById(id: number) {
-    return tmdbFetch<Movie>(`/movie/${id}`,
+    return tmdbFetch<MovieDetails>(`/movie/${id}`,
       {
         next: {
           revalidate: 86400,
