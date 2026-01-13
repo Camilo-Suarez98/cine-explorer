@@ -3,6 +3,7 @@ import { MovieSection } from "@/components/home/movie-section";
 import { tmdbServices } from "@/lib/services/tmdb";
 import { Metadata } from "next";
 import { EmptyState } from "@/components/ui/empty-movies";
+import { Pagination } from "@/components/ui/pagination";
 
 export const metadata: Metadata = {
   title: "Explore Movies",
@@ -55,12 +56,18 @@ async function MovieResults({
       );
     } else {
       return (
-        <MovieSection
-          id="explore"
-          movies={data.results}
-          title="Explore"
-          description={`Founded ${data.total_results.toLocaleString() || 0} movies`}
-        />
+        <>
+          <MovieSection
+            id="explore"
+            movies={data.results}
+            title="Explore"
+            description={`Found ${data.total_results.toLocaleString() || 0} movies`}
+          />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={data.total_pages > 500 ? 500 : data.total_pages} // TMDB API limits to 500 pages
+          />
+        </>
       );
     }
   } catch (error) {
