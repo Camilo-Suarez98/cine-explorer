@@ -30,7 +30,6 @@ export const Searchbar = () => {
     setIsAiSearching(true);
     try {
       const title = await getMovieTitleFromDescription(searchValue);
-      console.log("Title", title);
       if (title) {
         setSearchValue(title);
         updateFilters({ query: title, page: '1' });
