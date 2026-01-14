@@ -79,17 +79,6 @@ export default async function Explore({ searchParams }: ExploreMoviesParams) {
   const params = await searchParams;
   const { genre, year, sort_by, query, page } = params;
 
-  const genresData = await tmdbServices.getGenres();
-
-  const resultsPreview = query
-    ? await tmdbServices.searchMovie(query, 1)
-    : await tmdbServices.getExploreMovies({
-      page: 1,
-      genre,
-      sort_by,
-      year,
-    });
-
   return (
     <section className="py-8 bg-muted/30">
       <div className="container mx-auto px-4">
