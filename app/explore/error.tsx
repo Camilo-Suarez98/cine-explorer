@@ -18,9 +18,6 @@ export default function ExploreError({ error, reset }: { error: Error & { digest
           </div>
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-foreground">Error Loading Movies</h1>
-            <p className="text-muted-foreground">
-              {error.message || "We encountered an error while loading movies. Please try again."}
-            </p>
           </div>
           <div className="flex gap-4 justify-center">
             <button

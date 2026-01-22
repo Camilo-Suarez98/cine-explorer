@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function LoginError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    console.error("Error in home page:", error)
+    console.error("[v0] Error in login page:", error)
   }, [error])
 
   return (
@@ -17,7 +17,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
             <AlertCircle className="h-24 w-24 text-destructive" />
           </div>
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-foreground">Error Loading Movies</h1>
+            <h1 className="text-3xl font-bold text-foreground">Error Loading Login</h1>
           </div>
           <div className="flex gap-4 justify-center">
             <button

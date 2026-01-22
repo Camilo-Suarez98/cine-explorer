@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Search, X, Sparkles, Loader2 } from "lucide-react";
 import { useMovieFilter } from "@/hooks/use-movie-filter";
 import { useDebounce } from "@/hooks/use-debounce";
-import { getMovieTitleFromDescription } from "@/app/actions";
+import { getMovieTitleFromDescription } from "@/app/actions/movie-actions";
 import { cn } from "@/lib/utils/cn";
 
 export const Searchbar = () => {
