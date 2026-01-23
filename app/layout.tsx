@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SessionProvider } from "@/components/providers/session-provider";
+import { FavoritesProvider } from "@/context/favorites-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,9 +69,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-          <ScrollToTop />
-          <Header />
-          {children}
+          <FavoritesProvider>
+            <ScrollToTop />
+            <Header />
+            {children}
+          </FavoritesProvider>
         </SessionProvider>
       </body>
     </html>
