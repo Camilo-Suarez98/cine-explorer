@@ -7,10 +7,8 @@ import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { User } from "lucide-react";
 import { HeaderLink } from "../ui/HeaderLink";
-import { createPortal } from "react-dom";
 
-export const LogoutButton = () => {
-  const { data: session, status } = useSession();
+export const LogoutButton = ({ session, status }: { session: any, status: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (status === "loading") {
@@ -39,13 +37,10 @@ export const LogoutButton = () => {
 
         {isOpen && (
           <>
-            {createPortal(
-              <div
-                className="fixed inset-0 z-70"
-                onClick={() => setIsOpen(false)}
-              />,
-              document.body
-            )}
+            <div
+              className="fixed inset-0 z-50"
+              onClick={() => setIsOpen(false)}
+            />
             <div className="absolute right-0 top-full z-60 mt-2 w-56 origin-top-right rounded-xl border border-border bg-popover p-1 shadow-lg animate-in fade-in zoom-in-95 data-[side=bottom]:slide-in-from-top-2">
               <div className="px-3 py-2">
                 <p className="text-sm font-medium text-foreground">
