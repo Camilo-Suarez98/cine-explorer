@@ -50,7 +50,7 @@ export const Searchbar = () => {
         />
         <input
           type="text"
-          placeholder="Search for movies..."
+          placeholder="Search for movies or describe the movie and click on the sparkles icon"
           className="pl-10 pr-3 py-2 border rounded-md w-full text-sm"
           onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
