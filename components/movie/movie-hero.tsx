@@ -1,9 +1,29 @@
+"use client";
+
 import Image from "next/image";
 import { MovieDetails } from "@/lib/types/movie";
 import { formatDate, formatRating, formatRuntime, getImageUrl } from "@/lib/utils/format";
-import { Calendar, Star, Clock } from "lucide-react";
+import { Calendar, Star, Clock, Heart } from "lucide-react";
+import { useFavorites } from "@/context/favorites-context";
+import { useSession } from "next-auth/react";
 
 export const MovieHero = ({ movie }: { movie: MovieDetails }) => {
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const favorite = isFavorite(movie.id);
+  const { status } = useSession();
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (status === "authenticated") {
+      if (favorite) {
+        removeFavorite(movie.id);
+      } else {
+        addFavorite(movie);
+      }
+    }
+  };
+
   return (
     <div className="relative">
       <div className="absolute inset-0 z-0">
@@ -20,7 +40,7 @@ export const MovieHero = ({ movie }: { movie: MovieDetails }) => {
       </div>
       <div className="relative z-10 container mx-auto px-4 pt-32 pb-12">
         <div className="grid md:grid-cols-[300px,1fr] gap-8 items-start">
-          <div className="mx-auto md:mx-0">
+          <div className="mx-auto relative md:mx-0">
             <Image
               src={getImageUrl(movie.poster_path, "w500") || "/placeholder.svg"}
               alt={`${movie.title} poster`}
@@ -28,12 +48,23 @@ export const MovieHero = ({ movie }: { movie: MovieDetails }) => {
               height={450}
               className="rounded-lg"
             />
+            {status === "authenticated" && (
+              <button
+                onClick={handleToggleFavorite}
+                className="absolute top-2 right-2 z-10 p-2 cursor-pointer rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+              >
+                <Heart
+                  size={20}
+                  className={"w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 " + (favorite ? "fill-red-500 text-red-500" : "text-white")}
+                />
+              </button>
+            )}
           </div>
 
           <div>
             <div className="mb-6">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2 text-balance">{movie.title}</h1>
-              <p className="text-lg text-muted-foreground italic">{movie.tagline}</p>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2 text-balance text-center md:text-left">{movie.title}</h1>
+              <p className="text-lg text-muted-foreground italic text-center md:text-left">{movie.tagline}</p>
             </div>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
               <div className="flex items-center gap-2">
