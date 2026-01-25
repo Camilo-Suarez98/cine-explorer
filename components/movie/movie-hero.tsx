@@ -12,7 +12,7 @@ export const MovieHero = ({ movie }: { movie: MovieDetails }) => {
             src={getImageUrl(movie.backdrop_path) || "/placeholder.svg"}
             alt={`${movie.title} picture`}
             fill
-            className="object-cover"
+            className="object-fill"
             priority
           />
           <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-background/40"></div>
