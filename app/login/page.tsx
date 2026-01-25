@@ -9,10 +9,8 @@ export const metadata: Metadata = {
 
 export default async function LoginPage() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-background">
+    <div className="min-h-[calc(100vh-6rem)] w-full flex items-center justify-center relative overflow-hidden bg-background">
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px] animate-pulse" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-500/20 blur-[120px] animate-pulse delay-1000" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
 
       <main className="relative z-10 w-full max-w-md px-4">
         <div className="relative group">
