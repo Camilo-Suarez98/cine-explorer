@@ -68,10 +68,10 @@ export const Header = () => {
                 )}
               </div>
             </div>
-            <div className="pt-4 border-t px-2">
+            <div className="pt-4 border-t">
               {status === "authenticated" ? (
                 <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3 px-2">
+                  <div className="flex items-center gap-3">
                     {session?.user?.image ? (
                       <img
                         src={session.user.image}
