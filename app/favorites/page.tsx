@@ -4,7 +4,7 @@ import { useFavorites } from "@/context/favorites-context";
 import { MovieCard } from "@/components/movie/movie-card";
 import { useEffect, useState } from "react";
 import { Movie } from "@/lib/types/movie";
-import { Loader2, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
