@@ -2,7 +2,7 @@
 
 import { useFavorites } from "@/context/favorites-context";
 import { MovieCard } from "@/components/movie/movie-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Movie } from "@/lib/types/movie";
 import { Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,12 @@ export default function FavoritesPage() {
   const { favorites } = useFavorites();
   const [recommendations, setRecommendations] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (favorites.length > 0) {
+      getRecommendations();
+    }
+  }, [favorites]);
 
   const getRecommendations = async () => {
     if (favorites.length === 0) return;
@@ -45,21 +51,6 @@ export default function FavoritesPage() {
             Manage your favorite movies and discover new ones.
           </p>
         </div>
-
-        {favorites.length > 0 && (
-          <Button
-            onClick={getRecommendations}
-            disabled={loading}
-            className="flex items-center gap-2"
-          >
-            {loading ? (
-              <Loader2 className="animate-spin" size={16} />
-            ) : (
-              <Sparkles size={16} />
-            )}
-            Get AI Recommendations based on your favorites
-          </Button>
-        )}
       </div>
 
       {favorites.length === 0 ? (
