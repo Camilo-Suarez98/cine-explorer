@@ -7,6 +7,7 @@ import { Movie } from "@/lib/types/movie";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export default function FavoritesPage() {
   const { favorites } = useFavorites();
@@ -71,23 +72,30 @@ export default function FavoritesPage() {
         </div>
       )}
 
-      {recommendations.length > 0 && (
-        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="mb-6 border-t pt-8">
-            <h2 className="text-2xl font-bold flex items-center gap-2 mb-2">
-              <Sparkles className="text-yellow-500" />
-              Recommended for You
-            </h2>
-            <p className="text-muted-foreground">
-              Based on your favorites collection.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {recommendations.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center">
+          <LoadingSpinner size="lg" />
+          <p className="text-muted-foreground">Generating recommendations...</p>
         </div>
+      ) : (
+        recommendations.length > 0 && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="mb-6 border-t pt-8">
+              <h2 className="text-2xl font-bold flex items-center gap-2 mb-2">
+                <Sparkles className="text-yellow-500" />
+                Recommended for You
+              </h2>
+              <p className="text-muted-foreground">
+                Based on your favorites collection.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {recommendations.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </div>
+        )
       )}
     </div>
   );
