@@ -116,7 +116,7 @@
 }
 
 * {
-  scrollbar-color: var(--primary) var(--background);
+  scrollbar-width: none;
 }
 
 @layer base {
