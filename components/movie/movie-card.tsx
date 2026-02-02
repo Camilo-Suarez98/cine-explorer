@@ -32,7 +32,6 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
             alt={`${movie.title} poster`}
             width={200}
             height={300}
-            loading="eager"
             className="w-full object-fill rounded-md md:h-[330px]"
           />
           {status === "authenticated" && (
