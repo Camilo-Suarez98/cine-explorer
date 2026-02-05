@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Login to access your personalized movie experience",
 };
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return (
     <div className="min-h-[calc(100vh-6rem)] w-full flex items-center justify-center relative overflow-hidden bg-background">
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px] animate-pulse" />
@@ -40,4 +40,4 @@ export default async function LoginPage() {
       </main>
     </div>
   );
-}
+};
