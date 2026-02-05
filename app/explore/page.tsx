@@ -10,14 +10,8 @@ export const metadata: Metadata = {
   description: "Search and filter thousands of movies. Find your next favorite film.",
 }
 
-interface ExploreMoviesParams {
-  searchParams: {
-    query?: string;
-    page?: string;
-    genre?: string;
-    sort_by?: string;
-    year?: string;
-  }
+type ExploreProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 async function MovieResults({
@@ -33,51 +27,54 @@ async function MovieResults({
   year?: string;
   page: string;
 }) {
-  try {
-    const currentPage = Number.parseInt(page || '1', 10);
-    const data = query
-      ? await tmdbServices.searchMovie(query, currentPage)
-      : await tmdbServices.getExploreMovies({
-        page: currentPage,
-        genre: genre || '',
-        sort_by: sort_by || 'popularity.desc',
-        year: year || '',
-      });
-    if (data.results.length === 0) {
-      return (
-        <div className="container mx-auto px-4">
-          <EmptyState
-            title="No movies found"
-            description="Try a different search or filter."
-            actionLabel="Clear filters"
-            actionHref="?"
-          />
-        </div>
-      );
-    } else {
-      return (
-        <>
-          <MovieSection
-            id="explore"
-            movies={data.results}
-            title="Explore"
-            description={`Found ${data.total_results.toLocaleString() || 0} movies`}
-          />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={data.total_pages > 500 ? 500 : data.total_pages}
-          />
-        </>
-      );
-    }
-  } catch (error) {
-    console.error('Error fetching movies:', error);
+  const currentPage = Number.parseInt(page || '1', 10);
+  const data = query
+    ? await tmdbServices.searchMovie(query, currentPage)
+    : await tmdbServices.getExploreMovies({
+      page: currentPage,
+      genre: genre || '',
+      sort_by: sort_by || 'popularity.desc',
+      year: year || '',
+    });
+
+  if (data.results.length === 0) {
+    return (
+      <div className="container mx-auto px-4">
+        <EmptyState
+          title="No movies found"
+          description="Try a different search or filter."
+          actionLabel="Clear filters"
+          actionHref="?"
+        />
+      </div>
+    );
   }
+
+  return (
+    <>
+      <MovieSection
+        id="explore"
+        movies={data.results}
+        title="Explore"
+        description={`Found ${data.total_results.toLocaleString() || 0} movies`}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data.total_pages > 500 ? 500 : data.total_pages}
+      />
+    </>
+  );
 }
 
-export default function Explore({ searchParams }: ExploreMoviesParams) {
-  const params = searchParams;
-  const { genre, year, sort_by, query, page } = params;
+export default async function Explore(props: ExploreProps) {
+  const searchParams = await props.searchParams;
+  const { genre, year, sort_by, query, page } = searchParams;
+
+  const genreStr = typeof genre === 'string' ? genre : undefined;
+  const yearStr = typeof year === 'string' ? year : undefined;
+  const sortByStr = typeof sort_by === 'string' ? sort_by : undefined;
+  const queryStr = typeof query === 'string' ? query : undefined;
+  const pageStr = typeof page === 'string' ? page : '1';
 
   return (
     <section className="py-8 bg-muted/30">
@@ -86,11 +83,11 @@ export default function Explore({ searchParams }: ExploreMoviesParams) {
           <Searchbar />
         </div>
         <MovieResults
-          page={page || '1'}
-          genre={genre || ''}
-          year={year || ''}
-          sort_by={sort_by || ''}
-          query={query || ''}
+          page={pageStr}
+          genre={genreStr}
+          year={yearStr}
+          sort_by={sortByStr}
+          query={queryStr}
         />
       </div>
     </section>

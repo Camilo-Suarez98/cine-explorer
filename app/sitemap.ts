@@ -6,10 +6,12 @@ type MoviesUrl = MetadataRoute.Sitemap[number];
 export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://cine-explorer-six.vercel.app/";
 
-  const popularMovies = await tmdbServices.getPopularMovies();
-  const upcomingMovies = await tmdbServices.getUpcomingMovies();
-  const topRatedMovies = await tmdbServices.getTopRatedMovies();
-  const nowPlayingMovies = await tmdbServices.getNowPlayingMovies();
+  const [popularMovies, upcomingMovies, topRatedMovies, nowPlayingMovies] = await Promise.all([
+    tmdbServices.getPopularMovies(),
+    tmdbServices.getUpcomingMovies(),
+    tmdbServices.getTopRatedMovies(),
+    tmdbServices.getNowPlayingMovies(),
+  ]);
 
   const allMovies = [...popularMovies.results, ...upcomingMovies.results, ...topRatedMovies.results, ...nowPlayingMovies.results];
   const uniqueMovies = Array.from(new Map(allMovies.map(movie => [movie.id, movie])).values()).slice(0, 50);
