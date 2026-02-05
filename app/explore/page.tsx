@@ -65,7 +65,7 @@ async function MovieResults({
           />
           <Pagination
             currentPage={currentPage}
-            totalPages={data.total_pages > 500 ? 500 : data.total_pages} // TMDB API limits to 500 pages
+            totalPages={data.total_pages > 500 ? 500 : data.total_pages}
           />
         </>
       );
@@ -75,8 +75,8 @@ async function MovieResults({
   }
 }
 
-export default async function Explore({ searchParams }: ExploreMoviesParams) {
-  const params = await searchParams;
+export default function Explore({ searchParams }: ExploreMoviesParams) {
+  const params = searchParams;
   const { genre, year, sort_by, query, page } = params;
 
   return (

@@ -1,14 +1,18 @@
+"use client";
+
 import { Movie } from "@/lib/types/movie";
 import { MovieCard } from "../movie/movie-card";
+import { use } from "react";
 
 interface MovieSectionProps {
   id: string;
-  movies: Movie[];
+  movies: Promise<Movie[]> | Movie[];
   title: string;
   description?: string;
 }
 
 export const MovieSection = ({ id, movies, title, description }: MovieSectionProps) => {
+  const moviesData = movies instanceof Promise ? use(movies) : movies;
   return (
     <section className="py-12" id={id}>
       <div className="container mx-auto px-4">
@@ -17,7 +21,7 @@ export const MovieSection = ({ id, movies, title, description }: MovieSectionPro
           {description && <p className="text-muted-foreground text-center text-balance md:text-left">{description}</p>}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {movies.slice(0, 10).map((movie) => (
+          {moviesData.slice(0, 10).map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>

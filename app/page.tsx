@@ -4,71 +4,47 @@ import { tmdbServices } from "@/lib/services/tmdb";
 import { Suspense } from "react";
 import { MovieCardSkeleton } from "@/components/ui/movie-card-skeleton";
 
-export default async function Home() {
-  const data = await tmdbServices.getPopularMovies();
-  const upcomingData = await tmdbServices.getUpcomingMovies();
-  const topRatedData = await tmdbServices.getTopRatedMovies();
-  const nowPlayingData = await tmdbServices.getNowPlayingMovies();
-
-  const MovieSectionLoaded = () => {
-    return (
-      <MovieSection
-        id="popular-movies"
-        movies={nowPlayingData.results}
-        title="Popular Movies"
-        description="Explore the most popular movies from around the world."
-      />
-    );
-  };
-
-  const UpcomingMovieSectionLoaded = () => {
-    return (
-      <MovieSection
-        id="upcoming-movies"
-        movies={upcomingData.results}
-        title="Upcoming Movies"
-        description="Coming soon to theaters"
-      />
-    );
-  };
-
-  const TopRatedMovieSectionLoaded = () => {
-    return (
-      <MovieSection
-        id="top-rated-movies"
-        movies={topRatedData.results}
-        title="Top Rated Movies"
-        description="Discover the highest-rated movies from around the world."
-      />
-    );
-  };
-
-  const NowPlayingMovieSectionLoaded = () => {
-    return (
-      <MovieSection
-        id="now-playing-movies"
-        movies={data.results}
-        title="Now Playing Movies"
-        description="Currently showing in theaters"
-      />
-    );
-  };
+export default function Home() {
+  const popularMovies = tmdbServices.getPopularMovies().then(data => data.results);
+  const upcomingMovies = tmdbServices.getUpcomingMovies().then(data => data.results);
+  const topRatedMovies = tmdbServices.getTopRatedMovies().then(data => data.results);
+  const nowPlayingMovies = tmdbServices.getNowPlayingMovies().then(data => data.results);
 
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         <HeroSection />
         <Suspense fallback={<MovieCardSkeleton />}>
-          <MovieSectionLoaded />
+          <MovieSection
+            id="now-playing-movies"
+            movies={nowPlayingMovies}
+            title="Now Playing Movies"
+            description="Currently showing in theaters"
+          />
         </Suspense>
         <Suspense fallback={<MovieCardSkeleton />}>
-          <UpcomingMovieSectionLoaded />
+          <MovieSection
+            id="popular-movies"
+            movies={popularMovies}
+            title="Popular Movies"
+            description="Explore the most popular movies from around the world."
+          />
         </Suspense>
         <Suspense fallback={<MovieCardSkeleton />}>
-          <TopRatedMovieSectionLoaded />
+          <MovieSection
+            id="upcoming-movies"
+            movies={upcomingMovies}
+            title="Upcoming Movies"
+            description="Coming soon to theaters"
+          />
         </Suspense>
         <Suspense fallback={<MovieCardSkeleton />}>
-          <NowPlayingMovieSectionLoaded />
+          <MovieSection
+            id="top-rated-movies"
+            movies={topRatedMovies}
+            title="Top Rated Movies"
+            description="Discover the highest-rated movies from around the world."
+          />
         </Suspense>
       </main>
     </div>

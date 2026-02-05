@@ -15,9 +15,7 @@ export default function FavoritesPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (favorites.length > 0) {
-      getRecommendations();
-    }
+    getRecommendations();
   }, [favorites]);
 
   const getRecommendations = async () => {
@@ -78,7 +76,7 @@ export default function FavoritesPage() {
           <p className="text-muted-foreground">Generating recommendations...</p>
         </div>
       ) : (
-        recommendations.length > 0 && (
+        recommendations.length > 0 && favorites.length > 0 && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="mb-6 border-t pt-8">
               <h2 className="text-2xl font-bold flex items-center gap-2 mb-2">

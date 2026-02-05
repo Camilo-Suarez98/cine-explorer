@@ -10,7 +10,7 @@ import { use } from "react";
 import { Button } from "../ui/button";
 
 export const MovieHero = ({ movie }: { movie: Promise<MovieDetails> }) => {
-  const movieData = use(movie)
+  const movieData = use(movie);
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const favorite = isFavorite(movieData.id);
   const { status } = useSession();
