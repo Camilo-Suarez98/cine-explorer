@@ -8,7 +8,7 @@ interface EmptyStateProps {
   actionHref?: string
 }
 
-export function EmptyState({ title, description, actionLabel, actionHref }: EmptyStateProps) {
+export const EmptyState = ({ title, description, actionLabel, actionHref }: EmptyStateProps) => {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
       <div className="rounded-full bg-muted p-6 mb-6">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { InputForm } from "../ui/input-form";
 
 export function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
@@ -72,18 +73,16 @@ export function AuthForm() {
         <button
           type="button"
           onClick={() => setIsLogin(true)}
-          className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${
-            isLogin ? "bg-background shadow-xs text-foreground" : "text-muted-foreground hover:text-foreground"
-          }`}
+          className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${isLogin ? "bg-background shadow-xs text-foreground" : "text-muted-foreground hover:text-foreground"
+            }`}
         >
           Sign In
         </button>
         <button
           type="button"
           onClick={() => setIsLogin(false)}
-          className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${
-            !isLogin ? "bg-background shadow-xs text-foreground" : "text-muted-foreground hover:text-foreground"
-          }`}
+          className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${!isLogin ? "bg-background shadow-xs text-foreground" : "text-muted-foreground hover:text-foreground"
+            }`}
         >
           Register
         </button>
@@ -96,35 +95,21 @@ export function AuthForm() {
           </div>
         )}
 
-        <div className="grid gap-2">
-          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-            placeholder="you@example.com"
-          />
-        </div>
+        <InputForm
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+        />
 
-        <div className="grid gap-2">
-          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-            placeholder="••••••••"
-          />
-        </div>
+        <InputForm
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+        />
 
         <Button
           type="submit"
