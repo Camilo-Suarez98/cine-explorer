@@ -6,11 +6,11 @@ import { Movie } from "@/lib/types/movie";
 import { getImageUrl } from "@/lib/utils/format";
 import { Heart, Star } from "lucide-react";
 import { useFavorites } from "@/context/favorites-context";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/hooks/use-auth";
 
 export const MovieCard = ({ movie }: { movie: Movie }) => {
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const { status } = useSession();
+  const { status } = useAuth();
   const favorite = isFavorite(movie.id);
 
   const toggleFavorite = (e: React.MouseEvent) => {

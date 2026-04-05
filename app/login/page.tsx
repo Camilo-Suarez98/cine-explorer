@@ -1,4 +1,4 @@
-import { GoogleLoginButton } from "@/components/auth/google-login-button";
+import { AuthForm } from "@/components/auth/auth-form";
 import { Film } from "lucide-react";
 import { Metadata } from "next";
 
@@ -9,35 +9,21 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[calc(100vh-6rem)] w-full flex items-center justify-center relative overflow-hidden bg-background">
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px] animate-pulse" />
-
-      <main className="relative z-10 w-full max-w-md px-4">
-        <div className="relative group">
-          <div className="absolute -inset-0.5 bg-linear-to-r from-primary to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500" />
-
-          <div className="relative flex flex-col items-center justify-center p-8 md:p-12 bg-card/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl space-y-8">
-            <div className="text-center space-y-2">
-              <div className="flex justify-center mb-6">
-                <div className="p-3 bg-primary/10 rounded-xl border border-primary/20 shadow-[0_0_15px_rgba(30,73,183,0.3)]">
-                  <Film color="var(--primary)" size={30} />
-                </div>
-              </div>
-
-              <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-linear-to-b from-foreground to-foreground/70">
-                Welcome Back
-              </h1>
-              <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-                Sign in to Cine Explorer to curate your watchlist and discover new favorites.
-              </p>
+    <div className="flex bg-background min-h-[calc(100vh-6rem)] w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <div className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-6 shadow-sm">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <div className="flex h-11 w-11 items-center justify-center rounded-md bg-primary/10">
+              <Film className="h-6 w-6 text-primary" />
             </div>
-
-            <div className="w-full space-y-4">
-              <GoogleLoginButton />
-            </div>
+            <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+            <p className="text-sm text-muted-foreground">
+              Sign in to your Cine Explorer account
+            </p>
           </div>
+          <AuthForm />
         </div>
-      </main>
+      </div>
     </div>
   );
-};
+}

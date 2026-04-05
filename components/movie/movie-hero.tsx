@@ -5,7 +5,7 @@ import { MovieDetails } from "@/lib/types/movie";
 import { formatDate, formatRating, formatRuntime, getImageUrl } from "@/lib/utils/format";
 import { Calendar, Star, Clock, Heart } from "lucide-react";
 import { useFavorites } from "@/context/favorites-context";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/hooks/use-auth";
 import { use } from "react";
 import { Button } from "../ui/button";
 
@@ -13,7 +13,7 @@ export const MovieHero = ({ movie }: { movie: Promise<MovieDetails> }) => {
   const movieData = use(movie);
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const favorite = isFavorite(movieData.id);
-  const { status } = useSession();
+  const { status } = useAuth();
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();

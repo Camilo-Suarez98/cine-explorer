@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Film, Menu, X } from "lucide-react";
 import { HeaderLink } from "../ui/HeaderLink";
 import { LogoutButton } from "../auth/logout-button";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Header = () => {
-  const { data: session, status } = useSession();
+  const { session, status, supabase } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -72,26 +72,26 @@ export const Header = () => {
               {status === "authenticated" ? (
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-3">
-                    {session?.user?.image ? (
+                    {session?.user?.user_metadata?.avatar_url ? (
                       <img
-                        src={session.user.image}
-                        alt={session.user.name || "User"}
+                        src={session.user.user_metadata.avatar_url}
+                        alt={session.user.user_metadata.full_name || "User"}
                         className="h-8 w-8 rounded-full object-cover"
                       />
                     ) : (
                       <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
                         <span className="text-xs font-medium">
-                          {session?.user?.name?.[0] || "U"}
+                          {session?.user?.user_metadata?.full_name?.[0] || session?.user?.email?.[0]?.toUpperCase() || "U"}
                         </span>
                       </div>
                     )}
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium">{session?.user?.name}</span>
+                      <span className="text-sm font-medium">{session?.user?.user_metadata?.full_name || "User"}</span>
                       <span className="text-xs text-muted-foreground">{session?.user?.email}</span>
                     </div>
                   </div>
                   <button
-                    onClick={() => import("next-auth/react").then(({ signOut }) => signOut())}
+                    onClick={() => supabase.auth.signOut()}
                     className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors text-left"
                   >
                     <span className="flex-1">Logout</span>

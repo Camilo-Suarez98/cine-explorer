@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/scroll-to-top";
-import { SessionProvider } from "@/components/providers/session-provider";
 import { FavoritesProvider } from "@/context/favorites-context";
 
 const geistSans = Geist({
@@ -68,13 +67,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
-          <FavoritesProvider>
-            <ScrollToTop />
-            <Header />
-            {children}
-          </FavoritesProvider>
-        </SessionProvider>
+        <FavoritesProvider>
+          <ScrollToTop />
+          <Header />
+          {children}
+        </FavoritesProvider>
       </body>
     </html>
   );
