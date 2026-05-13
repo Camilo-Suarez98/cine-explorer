@@ -20,7 +20,7 @@ export const Header = () => {
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Film color="var(--primary)" size={24} />
-              <h1 className="text-xl font-bold text-foreground">CineExplorer</h1>
+              <h1 className="text-xl font-bold text-foreground">Cine Explorer</h1>
             </Link>
           </div>
 
